@@ -8,7 +8,10 @@
             placeholder="What's up doc?"
             required
             autofocus
+            maxlength="255"
+            v-on:keyup="updateTweetLeftChars"
         ></textarea>
+
 
         <div v-show="showPreview" class="flex">
             <img v-bind:src="imagePreview"/>
@@ -18,13 +21,16 @@
         <hr class="my-4">
 
         <footer class="flex justify-between items-center">
-            <img
-                src="{{ current_user()->avatar }}"
-                alt="your avatar"
-                class="rounded-full mr-2"
-                width="50"
-                height="50"
-            >
+            <div class="flex justify-between items-center">
+                <img
+                    src="{{ current_user()->avatar }}"
+                    alt="your avatar"
+                    class="rounded-full mr-2"
+                    width="50"
+                    height="50"
+                >
+                <span class="rounded-lg text-xs p-2 text-black text-center" style="width:40px;" v-bind:class="tweetCharsBackground" v-html="tweetLeftChars">255</span>
+            </div>
 
             <div class="flex justify-between items-center">
                 <label for="image" class="inline-block hover:text-blue-300 p-2 text-blue rounded-lg uppercase  cursor-pointer ">

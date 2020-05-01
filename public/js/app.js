@@ -49352,7 +49352,8 @@ var app = new Vue({
   data: function data() {
     return {
       showPreview: false,
-      imagePreview: ''
+      imagePreview: '',
+      tweetLeftChars: 255
     };
   },
   mounted: function mounted() {
@@ -49364,7 +49365,24 @@ var app = new Vue({
       }, 2000);
     }
   },
+  computed: {
+    tweetCharsBackground: function tweetCharsBackground() {
+      return {
+        'bg-gray-200': this.tweetLeftChars >= 200,
+        'bg-orange-200': this.tweetLeftChars >= 100 && this.tweetLeftChars < 200,
+        'bg-red-200': this.tweetLeftChars < 100
+      };
+    }
+  },
   methods: {
+    updateTweetLeftChars: function updateTweetLeftChars(e) {
+      if (255 >= e.target.value.length) {
+        this.tweetLeftChars = 255 - e.target.value.length;
+      } else {
+        this.tweetLeftChars = 0;
+        e.target.value = e.target.value.substr(0, 255);
+      }
+    },
     clearTweetImage: function clearTweetImage() {
       this.$refs.file.value = '';
       this.imagePreview = '';
