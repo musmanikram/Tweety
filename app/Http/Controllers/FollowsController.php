@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\UserFollowed;
 use App\User;
 
 class FollowsController extends Controller
@@ -12,6 +13,8 @@ class FollowsController extends Controller
             ->user()
             ->toggleFollow($user);
 
-        return back()->with('notification', auth()->user()->following($user) ? 'You Followed ' . $user->username : 'You Unfollowed ' . $user->username );
+	    $followed = auth()->user()->following($user);
+
+        return back()->with('notification', $followed ? 'You Followed ' . $user->username : 'You Unfollowed ' . $user->username );
     }
 }

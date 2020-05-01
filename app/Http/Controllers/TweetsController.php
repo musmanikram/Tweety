@@ -15,7 +15,17 @@ class TweetsController extends Controller
         ]);
     }
 
-    public function store()
+	public function show(Tweet $tweet)
+	{
+		$tweets = Tweet::where('id', $tweet->id)
+		     ->withLikes()->get();
+		return view('tweets.show', [
+			'tweets' => $tweets
+		]);
+	}
+
+
+	public function store()
     {
         $attributes = request()->validate([
             'body' => 'required|max:255',

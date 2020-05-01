@@ -28,6 +28,20 @@
         </li>
 
         <li>
+            <a
+                    class="font-bold text-lg mb-4 block"
+                    href="{{ current_user()->path('notifications') }}"
+            >
+                Notifications
+                @if(current_user()->unreadNotifications()->count())
+                    <span style="width:25px" class="bg-blue-500 text-white text-center p-1 rounded-lg text-xs inline-block">
+                    {{ current_user()->unreadNotifications()->count() }}
+                    </span>
+                @endif
+            </a>
+        </li>
+
+        <li>
             <form method="POST" action="/logout">
                 @csrf
 

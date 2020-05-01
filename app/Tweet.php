@@ -2,8 +2,10 @@
 
 namespace App;
 
+use App\Notifications\UserMentioned;
 use Illuminate\Database\Eloquent\Concerns\HasEvents;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 
 class Tweet extends Model
@@ -11,7 +13,7 @@ class Tweet extends Model
 	/**
 	 * Added HasEvents so we can hook when the Tweet is being deleted.
 	 */
-    use Likable, HasEvents;
+    use Likable, HasEvents, Notifiable;
 
     protected $guarded = [];
 
@@ -29,6 +31,17 @@ class Tweet extends Model
 				Storage::delete( $attributes['image'] );
 			}
 		});
+
+		static::created(function (Tweet $tweet) {
+			$users = $tweet->getMentionedUsers();
+			if ( ! $users ) {
+				return;
+			}
+
+			foreach( $users as $user ) {
+				$user->notify( new UserMentioned( $tweet ) );
+			}
+		});
 	}
 
     public function user()
@@ -39,5 +52,28 @@ class Tweet extends Model
 	public function getImageAttribute($value)
 	{
 		return $value ? asset('storage/' . $value ) : '';
+	}
+
+	/**
+	 * Find users that were mentioned.
+	 *
+	 * @param $body
+	 */
+	public function getMentionedUsers()
+	{
+		$pattern = '/[@]+([A-Za-z0-9-_\.@]+)\b/';
+		preg_match_all( $pattern, $this->body, $usernames );
+
+		// Make sure there's only one instance of each username.
+		$usernames = array_unique( $usernames[1] );
+
+		// Bail if no usernames.
+		if ( empty( $usernames ) ) {
+			return false;
+		}
+
+		$mentioned_users = array();
+
+		return User::whereIn('username', $usernames)->get();
 	}
 }

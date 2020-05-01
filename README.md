@@ -21,6 +21,7 @@ Each branch is listed in here so you can see what has changed. Each branch will 
 6. Allow tweets to be deleted.
    - Branch: https://github.com/igorbenic/Tweety/tree/tweet-delete
 7. Add support for mentions and notifications.
+   - Branch: https://github.com/igorbenic/Tweety/tree/notifications
 8. Work on responsiveness.
 9. Consider adding [Laravel Livewire](https://laravel-livewire.com) to allow for more interactive forms.
 

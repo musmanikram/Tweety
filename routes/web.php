@@ -19,11 +19,11 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/tweets', 'TweetsController@index')->name('home');
+	Route::get('/tweets/{tweet:id}', 'TweetsController@show')->name('tweet');
     Route::post('/tweets', 'TweetsController@store');
 	Route::delete('/tweets/{tweet}', 'TweetsController@destroy')
 	     ->name('delete-tweet')
 	     ->middleware('can:delete,tweet');
-
 
 	Route::post('/tweets/{tweet}/like', 'TweetLikesController@store');
     Route::delete('/tweets/{tweet}/like', 'TweetLikesController@destroy');
@@ -43,7 +43,12 @@ Route::middleware('auth')->group(function () {
         'ProfilesController@edit'
     )->middleware('can:edit,user');
 
-    Route::patch(
+	Route::get(
+		'/profiles/{user:username}/notifications',
+		'NotificationsController@index'
+	)->middleware('can:edit,user');
+
+	Route::patch(
         '/profiles/{user:username}',
         'ProfilesController@update'
     )->middleware('can:edit,user');
