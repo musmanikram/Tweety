@@ -45,6 +45,25 @@
 
         <div class="mb-6">
             <label class="block mb-2 uppercase font-bold text-xs text-gray-700"
+                   for="description"
+            >
+                Description
+            </label>
+
+            <textarea
+                class="border border-gray-400 p-2 w-full"
+                name="description"
+                id="description"
+                rows="5"
+            >{{ $user->description }}</textarea>
+
+            @error('description')
+            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="mb-6">
+            <label class="block mb-2 uppercase font-bold text-xs text-gray-700"
                   for="avatar"
             >
                 Avatar
@@ -62,10 +81,55 @@
                      alt="your avatar"
                      width="40"
                 >
+
+                @if( false === strpos( $user->avatar, 'images/default-avatar' ) )
+                    <a href="{{ route('profile', $user ) . '/edit/remove/avatar' }}"
+                       class="bg-red-400 text-white rounded py-2 px-4 hover:bg-blue-500 ml-4 inline-block"
+                       style="line-height: 31px"
+                    >
+                        X
+                    </a>
+                @endif
             </div>
+
 
             @error('avatar')
                 <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+            @enderror
+        </div>
+
+
+        <div class="mb-6">
+            <label class="block mb-2 uppercase font-bold text-xs text-gray-700"
+                   for="avatar"
+            >
+                Banner
+            </label>
+
+            <div class="relative">
+                @if( false === strpos( $user->banner, 'images/default-profile-banner.jpg' ) )
+                <a href="{{ route('profile', $user ) . '/edit/remove/banner' }}"
+                        class="bg-red-400 absolute text-white rounded py-2 px-4 hover:bg-blue-500 mr-4"
+                >
+                    X
+                </a>
+                @endif
+                <img src="{{ $user->banner }}"
+                     alt="your banner"
+                     class="w-auto mb-4"
+                     style="max-height:250px;max-width:100%"
+                >
+            </div>
+
+            <input class="border border-gray-400 p-2 w-full"
+                   type="file"
+                   name="banner"
+                   id="banner"
+                   accept="image/*"
+            >
+
+            @error('banner')
+            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
             @enderror
         </div>
 
@@ -129,7 +193,7 @@
         </div>
 
         <div class="mb-6">
-            <button type="submit"
+            <button type="submit" name="submit" value="edit"
                     class="bg-blue-400 text-white rounded py-2 px-4 hover:bg-blue-500 mr-4"
             >
                 Submit
