@@ -32,6 +32,13 @@ trait Likable
             ->count();
     }
 
+    public function deleteLike(User $user) {
+	    $like = $user->likes
+		    ->where('tweet_id', $this->id)
+		    ->first();
+	    $like->delete();
+    }
+
     public function likes()
     {
         return $this->hasMany(Like::class);
@@ -44,13 +51,20 @@ trait Likable
 
     public function like($user = null, $liked = true)
     {
-        $this->likes()->updateOrCreate(
-            [
-                'user_id' => $user ? $user->id : auth()->id(),
-            ],
-            [
-                'liked' => $liked,
-            ]
-        );
+    	if (
+	        ( $liked && $this->isLikedBy( $user ) ) ||
+	        (! $liked && $this->isDislikedBy( $user ) ) ) {
+    		// Delete
+		    $this->deleteLike( $user );
+	    } else {
+		    $this->likes()->updateOrCreate(
+			    [
+				    'user_id' => $user ? $user->id : auth()->id(),
+			    ],
+			    [
+				    'liked' => $liked,
+			    ]
+		    );
+	    }
     }
 }
