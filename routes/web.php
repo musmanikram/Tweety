@@ -29,6 +29,11 @@ Route::middleware('auth')->group(function () {
         'FollowsController@store'
     )->name('follow');
 
+	Route::get(
+		'/profiles/{user:username}/edit/remove/{asset}',
+		'ProfileAssetsController@destroy'
+	)->middleware('can:edit,user');
+
     Route::get(
         '/profiles/{user:username}/edit',
         'ProfilesController@edit'
@@ -40,6 +45,8 @@ Route::middleware('auth')->group(function () {
     )->middleware('can:edit,user');
 
     Route::get('/explore', 'ExploreController');
+
+
 });
 
 Route::get('/profiles/{user:username}', 'ProfilesController@show')->name(
