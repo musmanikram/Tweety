@@ -11,7 +11,7 @@
         </a>
     </div>
 
-    <div>
+    <div class="w-full">
         <h5 class="font-bold mb-2">
             <a href="{{ $tweet->user->path() }}">
                 {{ $tweet->user->name }}
@@ -21,6 +21,10 @@
         <p class="text-sm mb-3">
             {{ $tweet->body }}
         </p>
+
+        @if($tweet->image)
+            <img src="{{ $tweet->image }}"  class="block mx-auto" />
+        @endif
 
         @auth
             <x-like-buttons :tweet="$tweet" />

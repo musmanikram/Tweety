@@ -19,7 +19,7 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+//Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -27,6 +27,60 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+console.log('loaded');
+
 const app = new Vue({
     el: '#app',
+    data() {
+        return {
+            showPreview: false,
+            imagePreview: ''
+        }
+    },
+    methods: {
+        clearTweetImage() {
+            this.$refs.file.value='';
+            this.imagePreview = '';
+            this.showPreview = false;
+        },
+        handleFilePreview(){
+
+            /*
+             Set the local file variable to what the user has selected.
+             */
+            this.file = this.$refs.file.files[0];
+
+            /*
+             Initialize a File Reader object
+             */
+            let reader  = new FileReader();
+
+            /*
+             Add an event listener to the reader that when the file
+             has been loaded, we flag the show preview as true and set the
+             image to be what was read from the reader.
+             */
+            reader.addEventListener("load", function () {
+                this.showPreview = true;
+                this.imagePreview = reader.result;
+            }.bind(this), false);
+
+            /*
+             Check to see if the file is not empty.
+             */
+            if( this.file ){
+                /*
+                 Ensure the file is an image file.
+                 */
+                if ( /\.(jpe?g|png|gif)$/i.test( this.file.name ) ) {
+                    /*
+                     Fire the readAsDataURL method which will read the file in and
+                     upon completion fire a 'load' event which we will listen to and
+                     display the image in the preview.
+                     */
+                    reader.readAsDataURL( this.file );
+                }
+            }
+        }
+    }
 });
