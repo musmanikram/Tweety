@@ -20,7 +20,7 @@
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
+    <div id="app" class="relative">
         <section class="px-8 py-4 mb-6">
             <header class="container mx-auto">
                 <h1>
@@ -35,7 +35,15 @@
         </section>
 
         {{ $slot }}
+
+        @if(session('notification'))
+            <div ref="notification" class="fixed bg-green-200 p-10 text-black-50" style="right: 20px;bottom:20px;">
+                {{ session('notification') }}
+            </div>
+        @endif
     </div>
+
+
 
     <script src="http://unpkg.com/turbolinks"></script>
 </body>

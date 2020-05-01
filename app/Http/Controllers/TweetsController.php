@@ -34,6 +34,6 @@ class TweetsController extends Controller
 	        'image' => isset( $attributes['image'] ) ? $attributes['image'] : '',
         ]);
 
-        return redirect()->route('home');
+        return redirect()->route('home')->with('notification', 'You Tweeted' );
     }
 }

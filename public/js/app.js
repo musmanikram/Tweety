@@ -49347,7 +49347,6 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-console.log('loaded');
 var app = new Vue({
   el: '#app',
   data: function data() {
@@ -49355,6 +49354,15 @@ var app = new Vue({
       showPreview: false,
       imagePreview: ''
     };
+  },
+  mounted: function mounted() {
+    if (this.$refs.notification) {
+      console.log('notification');
+      var notification = this.$refs.notification;
+      setTimeout(function () {
+        notification.remove();
+      }, 2000);
+    }
   },
   methods: {
     clearTweetImage: function clearTweetImage() {

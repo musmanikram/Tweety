@@ -27,7 +27,6 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-console.log('loaded');
 
 const app = new Vue({
     el: '#app',
@@ -35,6 +34,16 @@ const app = new Vue({
         return {
             showPreview: false,
             imagePreview: ''
+        }
+    },
+    mounted() {
+
+        if ( this.$refs.notification ) {
+            console.log('notification');
+            var notification = this.$refs.notification;
+            setTimeout(function(){
+                notification.remove();
+            }, 2000);
         }
     },
     methods: {

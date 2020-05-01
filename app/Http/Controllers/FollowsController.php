@@ -12,6 +12,6 @@ class FollowsController extends Controller
             ->user()
             ->toggleFollow($user);
 
-        return back();
+        return back()->with('notification', auth()->user()->following($user) ? 'You Followed ' . $user->username : 'You Unfollowed ' . $user->username );
     }
 }
