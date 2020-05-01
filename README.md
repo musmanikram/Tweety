@@ -4,7 +4,7 @@ This is the repository for the "Laravel From Scratch" [final project](https://la
 
 ## Recommended Additions
 
-1. The profile page banner image and description are hard-coded. Make these dynamic for each user.
+1. The profile page banner image and description are hard-coded. Make these dynamic for each user. **Completed**
   - Branch: https://github.com/igorbenic/Tweety/tree/profile-banner-description
 2. Add the ability to attach an image when publishing a tweet.
 3. There is currently no way to unlike a tweet. Add the ability to toggle a like.
