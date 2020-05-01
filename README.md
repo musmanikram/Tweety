@@ -19,6 +19,7 @@ Each branch is listed in here so you can see what has changed. Each branch will 
 5. When writing a new tweet, display the number of remaining characters they're allowed.
    - Branch: https://github.com/igorbenic/Tweety/tree/tweet-chars
 6. Allow tweets to be deleted.
+   - Branch: https://github.com/igorbenic/Tweety/tree/tweet-delete
 7. Add support for mentions and notifications.
 8. Work on responsiveness.
 9. Consider adding [Laravel Livewire](https://laravel-livewire.com) to allow for more interactive forms.
