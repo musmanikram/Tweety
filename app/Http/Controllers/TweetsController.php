@@ -36,4 +36,15 @@ class TweetsController extends Controller
 
         return redirect()->route('home')->with('notification', 'You Tweeted' );
     }
+
+    public function destroy(Tweet $tweet)
+    {
+    	if ( current_user()->id !== $tweet->user_id ) {
+    		abort(403);
+	    }
+
+	    $tweet->delete();
+
+	    return back()->with('notification', 'Tweet Deleted' );
+    }
 }
